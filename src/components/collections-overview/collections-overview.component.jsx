@@ -22,7 +22,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 CollectionsOverview.propTypes = {
-  collections: PropTypes.object
+  collections: PropTypes.array
 };
 
 export default connect(mapStateToProps)(CollectionsOverview);

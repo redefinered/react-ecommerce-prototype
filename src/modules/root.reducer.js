@@ -14,10 +14,10 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  user: userReducer,
-  cart: cartReducer,
-  directory: directoryReducer,
-  shop: shopReducer
+  userReducer,
+  cartReducer,
+  directoryReducer,
+  shopReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

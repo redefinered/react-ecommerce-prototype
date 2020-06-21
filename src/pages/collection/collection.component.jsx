@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import CollectionItem from 'components/collection-item/collection-item.component';
 
-import { selectCollection } from 'modules/shop/shop.selectors';
+import { selectCollection } from 'modules/ducks/shop/shop.selectors';
 
 import './collection.styles.scss';
 

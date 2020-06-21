@@ -1,45 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
-import './App.css';
+import { selectCurrentUser } from './modules/ducks/user/user.selectors';
+import { Creators as UserActionCreators } from 'modules/ducks/user/user.actions';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import CheckoutPage from './pages/checkout/checkout.component';
-
 import Header from './components/header/header.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-
-import { setCurrentUser } from './modules/user/user.actions';
-import { selectCurrentUser } from './modules/user/user.selectors';
+import './App.css';
 
 class App extends React.Component {
-  unsubscribeFromAuth = null;
-
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot((snapshot) => {
-          this.props.setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data()
-          });
-        });
-      } else {
-        this.props.setCurrentUser(userAuth);
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    this.props.checkUserSessionAction();
   }
 
   render() {
@@ -65,15 +43,13 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-const actions = (dispatch) => {
-  return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user))
-  };
+const actions = {
+  checkUserSessionAction: UserActionCreators.checkUserSession
 };
 
 App.propTypes = {
   currentUser: PropTypes.object,
-  setCurrentUser: PropTypes.func
+  checkUserSessionAction: PropTypes.func
 };
 
 export default connect(mapStateToProps, actions)(App);

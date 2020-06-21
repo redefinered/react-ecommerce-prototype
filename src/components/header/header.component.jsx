@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { auth } from 'firebase/firebase.utils';
+import { auth } from 'firebase-client/firebase.utils';
 import CartIcon from 'components/cart-icon/cart-icon.component';
 import CartDropdown from 'components/cart-dropdown/cart-dropdown.component';
-import { selectCartHidden } from 'modules/cart/cart.selectors';
-import { selectCurrentUser } from 'modules/user/user.selectors';
+import { selectCartHidden } from 'modules/ducks/cart/cart.selectors';
+import { selectCurrentUser } from 'modules/ducks/user/user.selectors';
 
 import { ReactComponent as Logo } from 'assets/crown.svg';
 

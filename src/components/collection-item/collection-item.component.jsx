@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CustomButton from 'components/custom-button/custom-button.component';
-import { addItem } from 'modules/cart/cart.actions';
+import { addItem } from 'modules/ducks/cart/cart.actions';
 
 import './collection-item.styles.scss';
 

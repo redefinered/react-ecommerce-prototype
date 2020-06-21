@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { toggleCartHidden } from 'modules/cart/cart.actions';
-import { selectCartItemsCount } from 'modules/cart/cart.selectors';
+import { toggleCartHidden } from 'modules/ducks/cart/cart.actions';
+import { selectCartItemsCount } from 'modules/ducks/cart/cart.selectors';
 
 import { ReactComponent as ShoppingIcon } from 'assets/shopping-bag.svg';
 

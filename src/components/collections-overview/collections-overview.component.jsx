@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import CollectionPreview from 'components/collection-preview/collection-preview.component';
 
-import { selectCollectionsForPreview } from 'modules/shop/shop.selectors';
+import { selectCollectionsForPreview } from 'modules/ducks/shop/shop.selectors';
 
 import './collections-overview.styles.scss';
 

@@ -8,9 +8,10 @@ const INITIAL_STATE = {
 
 export default createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_SUCCESS]: (state, action) => {
+    const { currentUser } = action;
     return {
       ...state,
-      currentUser: action.currentUser,
+      currentUser,
       error: null
     };
   },
@@ -24,13 +25,25 @@ export default createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_FAILURE]: (state, action) => {
     return {
       ...state,
-      error: action.payload
+      error: action.error
     };
   },
   [Types.SIGN_OUT_FAILURE]: (state, action) => {
     return {
       ...state,
-      error: action.payload
+      error: action.error
+    };
+  },
+  [Types.SIGN_UP_SUCCESS]: (state) => {
+    return {
+      ...state,
+      error: null
+    };
+  },
+  [Types.SIGN_UP_FAILURE]: (state, action) => {
+    return {
+      ...state,
+      error: action.error
     };
   }
 });

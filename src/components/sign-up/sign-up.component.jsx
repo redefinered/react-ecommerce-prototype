@@ -2,11 +2,15 @@
 /* eslint-disable no-alert */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FormInput from 'components/form-input/form-input.component';
 import CustomButton from 'components/custom-button/custom-button.component';
 
-import { auth, createUserProfileDocument } from 'firebase-client/firebase.utils';
+import { connect } from 'react-redux';
+import { Creators as UserActionCreators } from 'modules/ducks/user/user.actions';
+import { selectCurrentUser } from 'modules/ducks/user/user.selectors';
+import { createStructuredSelector } from 'reselect';
 
 import './sign-up.styles.scss';
 
@@ -22,31 +26,30 @@ class SignUp extends React.Component {
     };
   }
 
-  handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const { displayName, email, password, confirmPassword } = this.state;
-
-    if (password !== confirmPassword) {
-      // eslint-disable-next-line quotes
-      alert("passwords don't match");
-      return;
-    }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-
-      await createUserProfileDocument(user, { displayName });
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentUser === null && this.props.currentUser) {
+      // at this point there is a successful log-in
       this.setState({
         displayName: '',
         email: '',
         password: '',
         confirmPassword: ''
       });
-    } catch (error) {
-      console.error(error);
     }
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { displayName, email, password, confirmPassword } = this.state;
+    const { signUpAction } = this.props;
+
+    if (password !== confirmPassword) {
+      alert('passwords do not match');
+      return;
+    }
+
+    signUpAction({ displayName, email, password });
   };
 
   handleChange = (event) => {
@@ -101,4 +104,17 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  currentUser: PropTypes.object,
+  signUpAction: PropTypes.func
+};
+
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const actions = {
+  signUpAction: UserActionCreators.signUp
+};
+
+export default connect(mapStateToProps, actions)(SignUp);

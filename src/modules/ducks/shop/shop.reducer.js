@@ -1,14 +1,32 @@
-import SHOP_DATA from './shop.data';
+import { createReducer } from 'reduxsauce';
+import { Types } from './shop.actions';
 
 const INITIAL_STATE = {
-  collections: SHOP_DATA
+  error: null,
+  isFetching: false,
+  collections: null
 };
 
-const shopReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    default:
-      return state;
+export default createReducer(INITIAL_STATE, {
+  [Types.FETCH_COLLECTIONS]: (state) => {
+    return {
+      ...state,
+      isFetching: true
+    };
+  },
+  [Types.FETCH_COLLECTIONS_SUCCESS]: (state, action) => {
+    const { collections } = action.data;
+    return {
+      ...state,
+      isFetching: false,
+      collections
+    };
+  },
+  [Types.FETCH_COLLECTIONS_FAILURE]: (state, action) => {
+    return {
+      ...state,
+      isFetching: true,
+      error: action.error
+    };
   }
-};
-
-export default shopReducer;
+});

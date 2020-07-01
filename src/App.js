@@ -13,11 +13,17 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 
+// import { addCollectionAndDocuments } from 'firebase-client/firebase.utils';
+// import collectionsData from 'modules/ducks/shop/shop.data';
+
 import './App.css';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.checkUserSessionAction();
+
+    // let objects = Object.keys(collectionsData).map((key) => collectionsData[key]);
+    // addCollectionAndDocuments('collections', objects);
   }
 
   render() {

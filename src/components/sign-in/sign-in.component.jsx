@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FormInput from 'components/form-input/form-input.component';
 import CustomButton from 'components/custom-button/custom-button.component';
 
-import { auth, signInWithGoogle } from 'firebase-client/firebase.utils';
+import { connect } from 'react-redux';
+import { Creators as UserActionCreators } from 'modules/ducks/user/user.actions';
 
 import './sign-in.styles.scss';
 
@@ -19,15 +21,8 @@ class SignIn extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-
     const { email, password } = this.state;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '' });
-    } catch (error) {
-      console.log(error);
-    }
+    this.props.emailSignInAction({ email, password });
   };
 
   handleChange = (event) => {
@@ -61,7 +56,7 @@ class SignIn extends React.Component {
           />
           <div className="buttons">
             <CustomButton type="submit"> Sign in </CustomButton>
-            <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton type="button" onClick={this.props.googleSignInAction} isGoogleSignIn>
               Sign in with Google
             </CustomButton>
           </div>
@@ -71,4 +66,14 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+SignIn.propTypes = {
+  emailSignInAction: PropTypes.func,
+  googleSignInAction: PropTypes.func
+};
+
+const actions = {
+  emailSignInAction: UserActionCreators.emailSignIn,
+  googleSignInAction: UserActionCreators.googleSignIn
+};
+
+export default connect(null, actions)(SignIn);

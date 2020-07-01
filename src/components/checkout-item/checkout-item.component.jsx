@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { clearItemFromCart, addItem, removeItem } from 'modules/ducks/cart/cart.actions';
+import { Creators as CartActionCreators } from 'modules/ducks/cart/cart.actions';
 
 import './checkout-item.styles.scss';
 
@@ -31,11 +31,11 @@ const CheckoutItem = ({ cartItem, clearItem, addItem, removeItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  clearItem: (item) => dispatch(clearItemFromCart(item)),
-  addItem: (item) => dispatch(addItem(item)),
-  removeItem: (item) => dispatch(removeItem(item))
-});
+const actions = {
+  clearItem: CartActionCreators.clearItemFromCart,
+  addItem: CartActionCreators.addItem,
+  removeItem: CartActionCreators.removeItem
+};
 
 CheckoutItem.propTypes = {
   cartItem: PropTypes.object,
@@ -44,4 +44,4 @@ CheckoutItem.propTypes = {
   removeItem: PropTypes.func
 };
 
-export default connect(null, mapDispatchToProps)(CheckoutItem);
+export default connect(null, actions)(CheckoutItem);

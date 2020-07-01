@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { toggleCartHidden } from 'modules/ducks/cart/cart.actions';
+import { Creators as CartActionCreators } from 'modules/ducks/cart/cart.actions';
 import { selectCartItemsCount } from 'modules/ducks/cart/cart.selectors';
 
 import { ReactComponent as ShoppingIcon } from 'assets/shopping-bag.svg';
@@ -17,9 +17,9 @@ const CartIcon = ({ toggleCartHidden, itemCount }) => (
   </div>
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  toggleCartHidden: () => dispatch(toggleCartHidden())
-});
+const actions = {
+  toggleCartHidden: CartActionCreators.toggleCartHidden
+};
 
 const mapStateToProps = createStructuredSelector({
   itemCount: selectCartItemsCount
@@ -30,4 +30,4 @@ CartIcon.propTypes = {
   itemCount: PropTypes.number
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
+export default connect(mapStateToProps, actions)(CartIcon);

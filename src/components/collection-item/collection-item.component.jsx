@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CustomButton from 'components/custom-button/custom-button.component';
-import { addItem } from 'modules/ducks/cart/cart.actions';
+import { Creators as CartActionCreators } from 'modules/ducks/cart/cart.actions';
 
 import './collection-item.styles.scss';
 
@@ -29,13 +29,13 @@ const CollectionItem = ({ item, addItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (item) => dispatch(addItem(item))
-});
+const actions = {
+  addItem: CartActionCreators.addItem
+};
 
 CollectionItem.propTypes = {
   item: PropTypes.object,
   addItem: PropTypes.func
 };
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default connect(null, actions)(CollectionItem);

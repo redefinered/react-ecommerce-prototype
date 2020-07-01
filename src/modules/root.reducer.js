@@ -9,8 +9,7 @@ import shopReducer from './ducks/shop/shop.reducer';
 
 const persistConfig = {
   key: 'root',
-  storage,
-  whitelist: ['cart']
+  storage
 };
 
 const rootReducer = combineReducers({

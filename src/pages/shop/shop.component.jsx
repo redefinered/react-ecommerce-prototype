@@ -5,15 +5,31 @@ import { Route } from 'react-router-dom';
 import CollectionsOverview from 'components/collections-overview/collections-overview.component';
 import CollectionPage from 'pages/collection/collection.component';
 
-const ShopPage = ({ match }) => (
-  <div className="shop-page">
-    <Route exact path={`${match.path}`} component={CollectionsOverview} />
-    <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
-  </div>
-);
+import { connect } from 'react-redux';
+import { Creators as ShopActionCreators } from 'modules/ducks/shop/shop.actions';
+
+class ShopPage extends React.Component {
+  componentDidMount() {
+    this.props.fetchCollectionsAction();
+  }
+  render() {
+    const { match } = this.props;
+    return (
+      <div className="shop-page">
+        <Route exact path={`${match.path}`} component={CollectionsOverview} />
+        <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+      </div>
+    );
+  }
+}
 
 ShopPage.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  fetchCollectionsAction: PropTypes.func
 };
 
-export default ShopPage;
+const actions = {
+  fetchCollectionsAction: ShopActionCreators.fetchCollections
+};
+
+export default connect(null, actions)(ShopPage);

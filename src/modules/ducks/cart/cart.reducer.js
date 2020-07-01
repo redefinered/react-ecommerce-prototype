@@ -1,4 +1,6 @@
-import CartActionTypes from './cart.types';
+import { createReducer } from 'reduxsauce';
+import { Types } from './cart.actions';
+
 import { addItemToCart, removeItemFromCart } from './cart.utils';
 
 const INITIAL_STATE = {
@@ -6,31 +8,35 @@ const INITIAL_STATE = {
   cartItems: []
 };
 
-const cartReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case CartActionTypes.TOGGLE_CART_HIDDEN:
-      return {
-        ...state,
-        hidden: !state.hidden
-      };
-    case CartActionTypes.ADD_ITEM:
-      return {
-        ...state,
-        cartItems: addItemToCart(state.cartItems, action.payload)
-      };
-    case CartActionTypes.REMOVE_ITEM:
-      return {
-        ...state,
-        cartItems: removeItemFromCart(state.cartItems, action.payload)
-      };
-    case CartActionTypes.CLEAR_ITEM_FROM_CART:
-      return {
-        ...state,
-        cartItems: state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id)
-      };
-    default:
-      return state;
+export default createReducer(INITIAL_STATE, {
+  [Types.TOGGLE_CART_HIDDEN]: (state) => {
+    return {
+      ...state,
+      hidden: !state.hidden
+    };
+  },
+  [Types.ADD_ITEM]: (state, action) => {
+    return {
+      ...state,
+      cartItems: addItemToCart(state.cartItems, action.item)
+    };
+  },
+  [Types.REMOVE_ITEM]: (state, action) => {
+    return {
+      ...state,
+      cartItems: removeItemFromCart(state.cartItems, action.item)
+    };
+  },
+  [Types.CLEAR_ITEM_FROM_CART]: (state, action) => {
+    return {
+      ...state,
+      cartItems: state.cartItems.filter((cartItem) => cartItem.id !== action.item.id)
+    };
+  },
+  [Types.CLEAR_CART]: (state) => {
+    return {
+      ...state,
+      cartItems: []
+    };
   }
-};
-
-export default cartReducer;
+});

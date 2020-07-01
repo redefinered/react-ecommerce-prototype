@@ -29,8 +29,10 @@ export function* signInWithGoogleRequest() {
 
 export function* signInWithEmailRequest(action) {
   const { email, password } = action.data;
+  console.log('user', email);
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    console.log('user', user);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(Creators.signInFailure(error));
@@ -56,9 +58,21 @@ export function* signOutRequest() {
   }
 }
 
-export function* userSagas() {
+export function* signUpRequest(action) {
+  try {
+    const { displayName, email, password } = action.data;
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    yield getSnapshotFromUserAuth(user, { displayName });
+    yield put(Creators.signUpSuccess());
+  } catch (error) {
+    yield put(Creators.signUpFailure(error.message));
+  }
+}
+
+export default function* userSagas() {
   yield takeLatest(Types.GOOGLE_SIGN_IN, signInWithGoogleRequest);
   yield takeLatest(Types.EMAIL_SIGN_IN, signInWithEmailRequest);
   yield takeLatest(Types.CHECK_USER_SESSION, checkUserSessionRequest);
   yield takeLatest(Types.SIGN_OUT, signOutRequest);
+  yield takeLatest(Types.SIGN_UP, signUpRequest);
 }

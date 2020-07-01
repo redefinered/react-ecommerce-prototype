@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import { auth } from 'firebase-client/firebase.utils';
-import CartIcon from 'components/cart-icon/cart-icon.component';
-import CartDropdown from 'components/cart-dropdown/cart-dropdown.component';
+import { connect } from 'react-redux';
+import { Creators as UserActionCreators } from 'modules/ducks/user/user.actions';
+import { createStructuredSelector } from 'reselect';
 import { selectCartHidden } from 'modules/ducks/cart/cart.selectors';
 import { selectCurrentUser } from 'modules/ducks/user/user.selectors';
+
+import CartIcon from 'components/cart-icon/cart-icon.component';
+import CartDropdown from 'components/cart-dropdown/cart-dropdown.component';
 
 import { ReactComponent as Logo } from 'assets/crown.svg';
 
 import './header.styles.scss';
 
-const Header = ({ currentUser, hidden }) => (
+const Header = ({ currentUser, hidden, signOutAction }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -27,7 +28,7 @@ const Header = ({ currentUser, hidden }) => (
         CONTACT
       </Link>
       {currentUser ? (
-        <div className="option" onClick={() => auth.signOut()}>
+        <div className="option" onClick={() => signOutAction()}>
           SIGN OUT
         </div>
       ) : (
@@ -41,14 +42,19 @@ const Header = ({ currentUser, hidden }) => (
   </div>
 );
 
+Header.propTypes = {
+  currentUser: PropTypes.object,
+  hidden: PropTypes.bool,
+  signOutAction: PropTypes.func
+};
+
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   hidden: selectCartHidden
 });
 
-Header.propTypes = {
-  currentUser: PropTypes.object,
-  hidden: PropTypes.bool
+const actions = {
+  signOutAction: UserActionCreators.signOut
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, actions)(Header);

@@ -7,11 +7,11 @@ import { withRouter } from 'react-router-dom';
 import CustomButton from 'components/custom-button/custom-button.component';
 import CartItem from 'components/cart-item/cart-item.component';
 import { selectCartItems } from 'modules/ducks/cart/cart.selectors';
-import { toggleCartHidden } from 'modules/ducks/cart/cart.actions';
+import { Creators as CartActionCreators } from 'modules/ducks/cart/cart.actions';
 
 import './cart-dropdown.styles.scss';
 
-const CartDropdown = ({ cartItems, history, dispatch }) => (
+const CartDropdown = ({ cartItems, history, toggleCartHidden }) => (
   <div className="cart-dropdown">
     <div className="cart-items">
       {cartItems.length ? (
@@ -23,7 +23,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
     <CustomButton
       onClick={() => {
         history.push('/checkout');
-        dispatch(toggleCartHidden());
+        toggleCartHidden();
       }}
     >
       GO TO CHECKOUT
@@ -35,10 +35,15 @@ const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems
 });
 
+const actions = {
+  toggleCartHidden: CartActionCreators.toggleCartHidden
+};
+
 CartDropdown.propTypes = {
   cartItems: PropTypes.array,
   history: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  toggleCartHidden: PropTypes.func
 };
 
-export default withRouter(connect(mapStateToProps)(CartDropdown));
+export default withRouter(connect(mapStateToProps, actions)(CartDropdown));

@@ -8,6 +8,9 @@ const { Types, Creators } = createActions({
   signOut: [],
   signOutSuccess: [],
   signOutFailure: ['error'],
+  signUp: ['data'],
+  signUpSuccess: [],
+  signUpFailure: ['error'],
   checkUserSession: []
 });
 

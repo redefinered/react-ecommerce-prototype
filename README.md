@@ -17,20 +17,25 @@ run `yarn install` then `yarn start` from the root directory. That will run the 
 
 ## Tech Specs (wow... like a computer?)
 
-**Backend**
-
 - NodeJS
 - Express JS
 - Stripe Payment
 - Axios
 - Firebase Authentication
 - Firebase Firestore
+- Redux
+- Sass
+- React Router
+- Redux Saga
+- Jest
+- Enzyme
 
-**Front end**
+**Key Libraries**
 
 - axios
 - sass
 - react-router
+- react-stripe-checkout
 - redux
 - redux-logger
 - redux-persist

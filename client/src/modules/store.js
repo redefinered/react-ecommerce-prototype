@@ -13,7 +13,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [sagaMiddleware]; // makes middlewares scalable
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
   middlewares.push(logger);
 }
 

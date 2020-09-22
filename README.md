@@ -15,7 +15,7 @@ run `yarn install` then `yarn start` from the root directory. That will run the 
 2. `$ yarn install` installs dependencies
 3. `$ yarn start` starts the client app on port 3000
 
-## Tech Specs (wow... like a computer?)
+## Tech Specs
 
 - NodeJS
 - Express JS

@@ -15,6 +15,8 @@ run `yarn install` then `yarn start` from the root directory. That will run the 
 2. `$ yarn install` installs dependencies
 3. `$ yarn start` starts the client app on port 3000
 
+Make sure to register to Stripe and get your sandbox key and run `heroku config:set STRIPE_SECRET_KEY=<your-test-stripe-secret-key>` in order for Stripe sandbox mode to work.
+
 ## Tech Specs
 
 - NodeJS
